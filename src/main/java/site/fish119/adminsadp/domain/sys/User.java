@@ -5,10 +5,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import site.fish119.adminsadp.domain.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @Project adminsadp
@@ -39,6 +39,20 @@ public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String phone;
 
-    @Column(unique = true,nullable = true)
+    @Column(unique = true)
     private String email;
+
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="company_id")
+    private Company company;
+
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="dept_id")
+    private Department department;
+
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+    @OrderBy("sort ASC")
+    private Set<Role> roles = new HashSet<>(0);
 }

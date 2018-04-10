@@ -21,6 +21,7 @@ import java.util.Date;
 @Data
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
+    private static final long serialVersionUID = -1L;
     @Id
     @GeneratedValue
     private Long id;

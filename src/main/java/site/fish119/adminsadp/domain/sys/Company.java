@@ -1,12 +1,12 @@
 package site.fish119.adminsadp.domain.sys;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import site.fish119.adminsadp.domain.BaseEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * @Project adminsadp
@@ -20,9 +20,20 @@ import javax.persistence.Table;
 @Table(name = "sys_company")
 @Data
 public class Company extends BaseEntity {
+    private static final long serialVersionUID = -1L;
     @Column(nullable = false)
     private String name;
     private String shortName;
     private String phoneNum;
     private String address;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    @JsonIgnore
+    private Set<User> users;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "company_id")
+    @JsonIgnore
+    private Set<Department> departments;
 }
