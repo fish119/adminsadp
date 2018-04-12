@@ -65,6 +65,8 @@ public class AuthService {
         userToAdd.setUsername(username);
         userToAdd.setPassword(encoder.encode(rawPassword));
         userToAdd.setLastPasswordResetDate(new Date());
+        userToAdd.setNickname("nickName");
+        userToAdd.setPhone("18888888881");
         return userRepository.save(userToAdd);
     }
 
@@ -87,6 +89,8 @@ public class AuthService {
         final String rawPassword = requestUser.getPassword();
         User userToAdd = new User();
         userToAdd.setUsername(username);
+        userToAdd.setNickname("nickName");
+        userToAdd.setPhone("18888888888");
         userToAdd.setPassword(encoder.encode(rawPassword));
         userToAdd.setLastPasswordResetDate(new Date());
         userToAdd.setRoles(new HashSet<>(roleRepository.findAll()));
