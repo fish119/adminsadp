@@ -26,7 +26,6 @@ public class Authority extends BaseEntity implements GrantedAuthority {
 
     private String name;
 
-    @Column(columnDefinition="/")
     private String url;
 
     private String description;
