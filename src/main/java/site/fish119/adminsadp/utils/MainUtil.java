@@ -36,6 +36,6 @@ public class MainUtil {
     }
 
     public static Pageable getPageRequest(Integer page, Integer size, String sortColumn, String direction) {
-        return new PageRequest(page == null ? 0 : page, size == null || size <= 1 ? 50 : size, getSort(sortColumn, direction));
+        return PageRequest.of(page == null ? 0 : page, size == null || size <= 1 ? 50 : size, getSort(sortColumn, direction));
     }
 }

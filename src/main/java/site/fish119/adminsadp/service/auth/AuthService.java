@@ -54,6 +54,16 @@ public class AuthService {
         return tokenUtil.generateToken(userDetails);
     }
 
+    public String refresh(String oldToken) {
+        final String token = oldToken.substring(AuthConstant.tokenPrefix.length());
+        String username = tokenUtil.getUsernameFromToken(token);
+        UserDetailsImple user = (UserDetailsImple) userDetailsService.loadUserByUsername(username);
+        if (tokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
+            return tokenUtil.refreshToken(token);
+        }
+        return null;
+    }
+
     public User register(AuthRequest requestUser) {
         final String username = requestUser.getUsername();
         if (userRepository.findByUsername(username) != null) {
@@ -68,16 +78,6 @@ public class AuthService {
         userToAdd.setNickname("nickName");
         userToAdd.setPhone("18888888881");
         return userRepository.save(userToAdd);
-    }
-
-    public String refresh(String oldToken) {
-        final String token = oldToken.substring(AuthConstant.tokenPrefix.length());
-        String username = tokenUtil.getUsernameFromToken(token);
-        UserDetailsImple user = (UserDetailsImple) userDetailsService.loadUserByUsername(username);
-        if (tokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
-            return tokenUtil.refreshToken(token);
-        }
-        return null;
     }
 
     public User registerAdmin(AuthRequest requestUser) {

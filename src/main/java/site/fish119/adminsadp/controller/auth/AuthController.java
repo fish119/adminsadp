@@ -40,16 +40,6 @@ public class AuthController {
         return ResponseEntity.ok(map);
     }
 
-    @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
-    public User register(@RequestBody AuthRequest addedUser) {
-        return service.register(addedUser);
-    }
-
-    @RequestMapping(value = "/auth/registerAdmin", method = RequestMethod.POST)
-    public User registerAdmin(@RequestBody AuthRequest addedUser) {
-        return service.registerAdmin(addedUser);
-    }
-
     @RequestMapping(value = "/auth/refresh", method = RequestMethod.GET)
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) throws AuthenticationException {
         HashMap<String, String> map = new HashMap<>();
@@ -66,4 +56,15 @@ public class AuthController {
         }
         return ResponseEntity.ok(map);
     }
+
+    @RequestMapping(value = "/auth/register", method = RequestMethod.POST)
+    public User register(@RequestBody AuthRequest addedUser) {
+        return service.register(addedUser);
+    }
+
+    @RequestMapping(value = "/auth/registerAdmin", method = RequestMethod.POST)
+    public User registerAdmin(@RequestBody AuthRequest addedUser) {
+        return service.registerAdmin(addedUser);
+    }
+
 }
