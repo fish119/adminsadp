@@ -15,10 +15,14 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
+import javax.servlet.Filter;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -69,6 +73,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    //important 跨域配置，重要！
+    @Bean
+    public Filter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -76,18 +93,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
         //important 跨域配置，重要！
-        httpSecurity.cors().configurationSource(httpServletRequest -> {
-            CorsConfiguration cc = new CorsConfiguration().applyPermitDefaultValues();
-            cc.addAllowedMethod("*");
-            return cc;
-        });
+//        httpSecurity.cors().configurationSource(httpServletRequest -> {
+//            CorsConfiguration cc = new CorsConfiguration().applyPermitDefaultValues();
+//            cc.addAllowedMethod("*");
+//            cc.addAllowedOrigin("http://localhost:8000/");
+//            cc.addAllowedOrigin("http://localhost");
+//            cc.addAllowedHeader("*");
+//            cc.addExposedHeader("x-auth-token");
+//            cc.addExposedHeader("x-total-count");
+//            return cc;
+//        });
         httpSecurity
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .antMatchers("/druid/**", "/auth/**", "/webjars/**").permitAll()
                 .antMatchers(
                         HttpMethod.GET,
@@ -103,6 +125,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 .anyRequest().authenticated();
 
+        httpSecurity.addFilterBefore(corsFilter(), ChannelProcessingFilter.class);
         // 添加JWT filter
         httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity.addFilterBefore(securityInterceptor, FilterSecurityInterceptor.class);
