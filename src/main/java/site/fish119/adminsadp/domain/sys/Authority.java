@@ -33,6 +33,7 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     private Long sort;
 
     private String method;
+    private boolean onlySa=false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")

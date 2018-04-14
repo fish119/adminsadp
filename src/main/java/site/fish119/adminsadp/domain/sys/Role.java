@@ -28,17 +28,18 @@ public class Role extends BaseEntity {
 
     private Long sort;
 
+    @Column(name="company_id")
+    private Long companyId;
+
     @JsonIgnore
     @ManyToMany(mappedBy="roles")
     private Set<User> users = new HashSet<>(0);
-
 
     @ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER)
     @JoinTable(joinColumns = @JoinColumn(name = "ROLE_ID"),
             inverseJoinColumns = @JoinColumn(name = "Authority_ID"))
     @OrderBy("sort ASC")
     private Set<Authority> authorities = new HashSet<>(0);
-
 
     @ManyToMany(targetEntity = Menu.class, fetch = FetchType.EAGER)
     @JoinTable(name="sys_role_menus", joinColumns = @JoinColumn(name = "ROLE_ID"),
