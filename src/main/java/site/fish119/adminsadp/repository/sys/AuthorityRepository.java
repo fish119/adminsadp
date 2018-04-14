@@ -1,6 +1,7 @@
 package site.fish119.adminsadp.repository.sys;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import site.fish119.adminsadp.domain.sys.Authority;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @Date 2018/4/10 14:28
  * @Version V1.0
  */
+@Repository
 public interface AuthorityRepository extends JpaRepository<Authority,Long> {
     List<Authority> findByParentIsNullOrderBySortAsc();
 }
