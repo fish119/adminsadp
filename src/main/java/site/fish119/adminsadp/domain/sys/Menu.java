@@ -42,4 +42,24 @@ public class Menu extends BaseEntity {
     @OrderBy("sort ASC")
     @Getter(onMethod = @__( @JsonIgnore ))
     private Set<Role> mRoles = new HashSet<>(0);
+
+    @Transient
+    private Long pid;
+
+    @Transient
+    public Long getPid() {
+        if(this.getParent()!=null){
+            return this.getParent().getId();
+        }else{
+            return null;
+        }
+    }
+
+    public void setPid(long pid) {
+        if(this.getParent()!=null){
+            this.pid = this.getParent().getId();
+        }else{
+            this.pid =  null;
+        }
+    }
 }
