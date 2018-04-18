@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2018-04-18 14:43:35
+Date: 2018-04-18 22:05:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `logging_event` (
   `caller_line` char(4) COLLATE utf8_bin NOT NULL,
   `event_id` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`event_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=397 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=417 DEFAULT CHARSET=utf8 COLLATE=utf8_bin ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of logging_event
@@ -325,6 +325,26 @@ INSERT INTO `logging_event` VALUES ('1524030755285', 0x436F756C64206E6F742076616
 INSERT INTO `logging_event` VALUES ('1524030756547', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '394');
 INSERT INTO `logging_event` VALUES ('1524031001249', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '395');
 INSERT INTO `logging_event` VALUES ('1524031002432', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '396');
+INSERT INTO `logging_event` VALUES ('1524034948019', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '397');
+INSERT INTO `logging_event` VALUES ('1524034949100', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '398');
+INSERT INTO `logging_event` VALUES ('1524039024733', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '399');
+INSERT INTO `logging_event` VALUES ('1524039025824', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '400');
+INSERT INTO `logging_event` VALUES ('1524051343198', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '401');
+INSERT INTO `logging_event` VALUES ('1524051344252', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '402');
+INSERT INTO `logging_event` VALUES ('1524051570969', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '403');
+INSERT INTO `logging_event` VALUES ('1524051572074', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '404');
+INSERT INTO `logging_event` VALUES ('1524051762014', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '405');
+INSERT INTO `logging_event` VALUES ('1524051763097', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '406');
+INSERT INTO `logging_event` VALUES ('1524052300469', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '407');
+INSERT INTO `logging_event` VALUES ('1524052301989', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '408');
+INSERT INTO `logging_event` VALUES ('1524052524717', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '409');
+INSERT INTO `logging_event` VALUES ('1524052526381', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '410');
+INSERT INTO `logging_event` VALUES ('1524052625440', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '411');
+INSERT INTO `logging_event` VALUES ('1524052627220', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '412');
+INSERT INTO `logging_event` VALUES ('1524055215705', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '413');
+INSERT INTO `logging_event` VALUES ('1524055216746', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '414');
+INSERT INTO `logging_event` VALUES ('1524058061740', 0x436F756C64206E6F742076616C696461746520636F6E66696775726174696F6E2061747472696275746573206173207468652053656375726974794D65746164617461536F7572636520646964206E6F742072657475726E20616E7920617474726962757465732066726F6D20676574416C6C436F6E666967417474726962757465732829, 'site.fish119.adminsadp.security.SecurityInterceptorImple', 'WARN', 'localhost-startStop-1', '0', null, null, null, null, 'AbstractSecurityInterceptor.java', 'org.springframework.security.access.intercept.AbstractSecurityInterceptor', 'afterPropertiesSet', '159', '415');
+INSERT INTO `logging_event` VALUES ('1524058063014', 0x737072696E672E6A70612E6F70656E2D696E2D7669657720697320656E61626C65642062792064656661756C742E205468657265666F72652C2064617461626173652071756572696573206D617920626520706572666F726D656420647572696E6720766965772072656E646572696E672E204578706C696369746C7920636F6E66696775726520737072696E672E6A70612E6F70656E2D696E2D7669657720746F2064697361626C652074686973207761726E696E67, 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'WARN', 'main', '0', null, null, null, null, 'JpaBaseConfiguration.java', 'org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration', 'openEntityManagerInViewInterceptor', '235', '416');
 
 -- ----------------------------
 -- Table structure for logging_event_exception
@@ -9852,15 +9872,20 @@ CREATE TABLE `sys_authority` (
   PRIMARY KEY (`id`),
   KEY `FK7jouvtrmxkx4yq25e6vrjnn28` (`parent_id`),
   CONSTRAINT `FK7jouvtrmxkx4yq25e6vrjnn28` FOREIGN KEY (`parent_id`) REFERENCES `sys_authority` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of sys_authority
 -- ----------------------------
-INSERT INTO `sys_authority` VALUES ('1', '2018-04-13 15:39:05', '2018-04-13 15:39:08', '获取后台所需的全局数据，如用户信息、菜单等', 'GET', 'global', '0', '/global', null, '\0');
-INSERT INTO `sys_authority` VALUES ('2', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '系统设置', 'ALL', 'setting', '0', '/setting', null, '\0');
-INSERT INTO `sys_authority` VALUES ('3', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '获得所有菜单列表', 'GET', 'menu', '0', '/setting/menus', '2', '');
-INSERT INTO `sys_authority` VALUES ('4', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '保存菜单', 'POST', 'menu', '1', '/setting/menus', '2', '');
+INSERT INTO `sys_authority` VALUES ('1', '2018-04-13 15:39:05', '2018-04-13 15:39:08', '获取后台所需的全局数据，如用户信息、菜单等', 'GET', '全局信息', '0', '/global', null, '\0');
+INSERT INTO `sys_authority` VALUES ('2', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '菜单管理', 'ALL', '菜单管理', '99', '/setting', null, '\0');
+INSERT INTO `sys_authority` VALUES ('3', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '获得所有菜单列表', 'GET', '菜单列表', '0', '/setting/menus', '2', '');
+INSERT INTO `sys_authority` VALUES ('4', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '保存菜单', 'POST', '保存菜单', '1', '/setting/menus', '2', '');
+INSERT INTO `sys_authority` VALUES ('5', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '删除菜单', 'DELETE', '删除菜单', '2', '/setting/menu/*', '2', '');
+INSERT INTO `sys_authority` VALUES ('6', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '获得所有权限列表', 'GET', '权限列表', '1', '/setting/authorities', '9', '');
+INSERT INTO `sys_authority` VALUES ('7', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '保存权限', 'POST', '保存权限', '1', '/setting/authorities', '9', '');
+INSERT INTO `sys_authority` VALUES ('8', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '删除权限', 'DELETE', '删除权限', '1', '/setting/authority/*', '9', '');
+INSERT INTO `sys_authority` VALUES ('9', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '权限管理', 'ALL', '权限管理', '100', '/setting', null, '\0');
 
 -- ----------------------------
 -- Table structure for sys_company
@@ -9922,13 +9947,14 @@ CREATE TABLE `sys_menu` (
   PRIMARY KEY (`id`),
   KEY `FK2jrf4gb0gjqi8882gxytpxnhe` (`parent_id`),
   CONSTRAINT `FK2jrf4gb0gjqi8882gxytpxnhe` FOREIGN KEY (`parent_id`) REFERENCES `sys_menu` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('1', '2018-04-13 15:51:57', '2018-04-18 13:02:26', 'setting', '系统设置', 'setting', '100', null, '\0');
-INSERT INTO `sys_menu` VALUES ('2', '2018-04-13 15:54:57', '2018-04-17 19:28:25', 'menu-unfold', '菜单管理', 'menu', '0', '1', '');
+INSERT INTO `sys_menu` VALUES ('1', '2018-04-13 15:51:57', '2018-04-18 20:50:09', 'setting', '系统设置', 'setting', '100', null, '\0');
+INSERT INTO `sys_menu` VALUES ('2', '2018-04-13 15:54:57', '2018-04-18 19:57:45', 'menu-unfold', '菜单管理', 'menu', '0', '1', '');
+INSERT INTO `sys_menu` VALUES ('3', '2018-04-13 15:54:57', '2018-04-18 19:57:45', 'menu-unfold', '权限管理', 'authority', '1', '1', '');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -9970,6 +9996,10 @@ INSERT INTO `sys_role_authorities` VALUES ('1', '1');
 INSERT INTO `sys_role_authorities` VALUES ('1', '2');
 INSERT INTO `sys_role_authorities` VALUES ('1', '3');
 INSERT INTO `sys_role_authorities` VALUES ('1', '4');
+INSERT INTO `sys_role_authorities` VALUES ('1', '5');
+INSERT INTO `sys_role_authorities` VALUES ('1', '6');
+INSERT INTO `sys_role_authorities` VALUES ('1', '7');
+INSERT INTO `sys_role_authorities` VALUES ('1', '8');
 
 -- ----------------------------
 -- Table structure for sys_role_menus
@@ -9989,6 +10019,7 @@ CREATE TABLE `sys_role_menus` (
 -- ----------------------------
 INSERT INTO `sys_role_menus` VALUES ('1', '1');
 INSERT INTO `sys_role_menus` VALUES ('1', '2');
+INSERT INTO `sys_role_menus` VALUES ('1', '3');
 
 -- ----------------------------
 -- Table structure for sys_user
