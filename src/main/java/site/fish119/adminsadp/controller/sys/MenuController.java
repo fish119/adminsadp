@@ -38,8 +38,8 @@ public class MenuController extends BaseController {
         Map<String, Object> result = new HashMap<>();
         menuService.saveMenu(reqBody);
         //由于下一句的getCurrentUserMenus()方法会更改本具所获得的结果
-        //因此调用service的getNewCopyMenuList方法，重新生成结果数组并返回给客户端
-        result.put("data", menuService.getNewCopyMenuList(menuService.findAllMenus()));
+        //因此调用service的getNewCopyList方法，重新生成结果数组并返回给客户端
+        result.put("data", menuService.getNewCopyList(menuService.findAllMenus()));
         result.put("userMenus", menuService.getCurrentUserMenus());
         return ResponseEntity.ok(result);
     }
@@ -49,8 +49,8 @@ public class MenuController extends BaseController {
         Map<String, Object> result = new HashMap<>();
         menuService.delMenu(id);
         //由于下一句的getCurrentUserMenus()方法会更改本具所获得的结果
-        //因此调用service的getNewCopyMenuList方法，重新生成结果数组并返回给客户端
-        result.put("data", menuService.getNewCopyMenuList(menuService.findAllMenus()));
+        //因此调用service的getNewCopyList方法，重新生成结果数组并返回给客户端
+        result.put("data", menuService.getNewCopyList(menuService.findAllMenus()));
         result.put("userMenus", menuService.getCurrentUserMenus());
         return ResponseEntity.ok(result);
     }

@@ -1,15 +1,18 @@
 package site.fish119.adminsadp.service.sys;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.fish119.adminsadp.domain.BaseEntity;
 import site.fish119.adminsadp.domain.sys.Menu;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.repository.sys.MenuRepository;
 import site.fish119.adminsadp.repository.sys.UserRepository;
 import site.fish119.adminsadp.security.UserDetailsImple;
+import site.fish119.adminsadp.service.BaseService;
 import site.fish119.adminsadp.utils.MainUtil;
 
 import java.util.ArrayList;
@@ -24,7 +27,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Service
-public class MenuService {
+public class MenuService extends BaseService<Menu> {
     @Autowired
     public MenuService(MenuRepository menuRepository, UserRepository userRepository) {
         this.menuRepository = menuRepository;
@@ -36,23 +39,6 @@ public class MenuService {
 
     public List<Menu> findAllMenus() {
         return menuRepository.findByParentIsNullOrderBySortAsc();
-    }
-
-    public List<Menu> getNewCopyMenuList(Iterable<Menu> oldList) {
-        List<Menu> data = new ArrayList<>();
-        for (Menu menu : oldList) {
-            Menu tmp = new Menu();
-            tmp.setPath(menu.getPath());
-            tmp.setIcon(menu.getIcon());
-            tmp.setName(menu.getName());
-            tmp.setSort(menu.getSort());
-            tmp.setId(menu.getId());
-            tmp.setOnlySa(menu.getOnlySa());
-            tmp.setPid(menu.getPid());
-            tmp.setChildren(new LinkedHashSet<>(getNewCopyMenuList(menu.getChildren())));
-            data.add(tmp);
-        }
-        return data;
     }
 
     @Transactional
@@ -91,5 +77,13 @@ public class MenuService {
             parentMenu.getChildren().remove(menu);
             menuRepository.delete(menu);
         }
+    }
+
+    @Override
+    public Menu getCopyBean(Menu menu) {
+        Menu tmp = new Menu();
+        BeanUtils.copyProperties(menu,tmp);
+        tmp.setChildren(new LinkedHashSet<>(getNewCopyList(menu.getChildren())));
+        return tmp;
     }
 }

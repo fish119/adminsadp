@@ -1,6 +1,7 @@
 package site.fish119.adminsadp.domain.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,25 +18,26 @@ import java.util.Set;
  * @Date 2018/4/10 14:05
  * @Version V1.0
  */
-@EqualsAndHashCode(of = {"id"}, callSuper = true)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity()
 @Table(name = "sys_authority")
 @Data
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class Authority extends BaseEntity implements GrantedAuthority {
     private static final long serialVersionUID = -1L;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
-
     private String url;
-
     private String description;
-
     private Long sort;
-
     private String method;
-    private boolean onlySa=false;
+    private Boolean onlySa = false;
+    @Transient
+    private Long pid;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
     @JsonIgnore
     private Authority parent;
@@ -45,9 +47,39 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     private Set<Authority> children = new HashSet<>(0);
 
     @JsonIgnore
-    @ManyToMany(mappedBy="authorities",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "authorities", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @OrderBy("sort ASC")
     private Set<Role> roles = new HashSet<>(0);
+
+    public void setParent(Authority parent) {
+        if (sameParent(parent))
+            return;
+        Authority oldParent = this.parent;
+        this.parent = parent;
+        if (oldParent != null) {
+            oldParent.getChildren().remove(this);
+        }
+        if (parent != null) {
+            parent.getChildren().add(this);
+        }
+    }
+
+    @Transient
+    public Long getPid() {
+        if (this.getParent() != null) {
+            return this.getParent().getId();
+        } else {
+            return this.pid;
+        }
+    }
+
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
+
+    public Long getPidWithoutParent(){
+        return this.pid;
+    }
 
     public String getPermissionUrl() {
         return url;
@@ -61,5 +93,9 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     @JsonIgnore
     public String getAuthority() {
         return this.url + ";" + this.method;
+    }
+
+    private boolean sameParent(Authority newParent) {
+        return parent == null ? newParent == null : parent.equals(newParent);
     }
 }

@@ -16,6 +16,7 @@ import site.fish119.adminsadp.security.AuthConstant;
 import site.fish119.adminsadp.security.AuthRequest;
 import site.fish119.adminsadp.security.TokenUtil;
 import site.fish119.adminsadp.security.UserDetailsImple;
+import site.fish119.adminsadp.service.BaseService;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,7 +29,7 @@ import java.util.HashSet;
  * @Version V1.0
  */
 @Service
-public class AuthService {
+public class AuthService  extends BaseService<User> {
     @Autowired
     public AuthService(AuthenticationManager authenticationManager, UserRepository userRepository,
                        UserDetailsService userDetailsService, TokenUtil tokenUtil, RoleRepository roleRepository) {

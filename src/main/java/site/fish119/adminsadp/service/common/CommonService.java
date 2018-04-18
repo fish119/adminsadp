@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import site.fish119.adminsadp.domain.BaseEntity;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.repository.sys.MenuRepository;
 import site.fish119.adminsadp.repository.sys.UserRepository;
 import site.fish119.adminsadp.security.UserDetailsImple;
+import site.fish119.adminsadp.service.BaseService;
 import site.fish119.adminsadp.utils.MainUtil;
 
 import java.util.HashMap;
@@ -21,7 +23,7 @@ import java.util.Map;
  * @Version V1.0
  */
 @Service
-public class CommonService {
+public class CommonService  extends BaseService<BaseEntity> {
     private final UserRepository userRepository;
     private final MenuRepository menuRepository;
     @Autowired
