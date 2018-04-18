@@ -26,7 +26,7 @@ import java.util.List;
 @Service
 public class MenuService {
     @Autowired
-    public MenuService(MenuRepository menuRepository,UserRepository userRepository) {
+    public MenuService(MenuRepository menuRepository, UserRepository userRepository) {
         this.menuRepository = menuRepository;
         this.userRepository = userRepository;
     }
@@ -38,9 +38,9 @@ public class MenuService {
         return menuRepository.findByParentIsNullOrderBySortAsc();
     }
 
-    public List<Menu> getNewCopyMenuList(Iterable<Menu> oldList){
-        List<Menu> data= new ArrayList<>();
-        for(Menu menu : oldList){
+    public List<Menu> getNewCopyMenuList(Iterable<Menu> oldList) {
+        List<Menu> data = new ArrayList<>();
+        for (Menu menu : oldList) {
             Menu tmp = new Menu();
             tmp.setPath(menu.getPath());
             tmp.setIcon(menu.getIcon());
@@ -58,14 +58,14 @@ public class MenuService {
     @Transactional
     public void saveMenu(Menu menu) {
         Menu dbMenu = menu.getId() == null ? menu : menuRepository.getOne(menu.getId());
-        if(dbMenu.getId()!=null) {
+        if (dbMenu.getId() != null) {
             dbMenu.setIcon(menu.getIcon());
             dbMenu.setName(menu.getName());
             dbMenu.setSort(menu.getSort());
             dbMenu.setPath(menu.getPath());
             dbMenu.setOnlySa(menu.getOnlySa());
         }
-        dbMenu.setParent(menu.getPidWithoutParent()==null||menu.getPidWithoutParent()==0?null:menuRepository.getOne(menu.getPidWithoutParent()));
+        dbMenu.setParent(menu.getPidWithoutParent() == null || menu.getPidWithoutParent() == 0 ? null : menuRepository.getOne(menu.getPidWithoutParent()));
         menuRepository.save(dbMenu);
     }
 
@@ -77,6 +77,19 @@ public class MenuService {
             return MainUtil.cleanChildrenMenu(menuRepository.findByMRolesAndParentIsNullOrderBySortAsc(user.getRoles()), user.getRoles());
         } else {
             throw new BadCredentialsException("用户未登录");
+        }
+    }
+
+    @Transactional()
+    public void delMenu(Long id) {
+        Menu menu = menuRepository.getOne(id);
+        if (menu.getParent() == null) {
+            menuRepository.deleteById(id);
+        } else {
+            Menu parentMenu = menuRepository.getOne(menu.getPid());
+            menu.setParent(null);
+            parentMenu.getChildren().remove(menu);
+            menuRepository.delete(menu);
         }
     }
 }
