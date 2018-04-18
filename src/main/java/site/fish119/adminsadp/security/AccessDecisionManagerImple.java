@@ -32,7 +32,6 @@ public class AccessDecisionManagerImple implements AccessDecisionManager {
         if (url.contains("/druid")||
                 url.contains("/auth") ||
                 url.contains("/logfile") ||
-//                url.contains("/auditevents") ||
                 url.contains(".html") ||
                 url.contains(".css") ||
                 url.contains(".js") ||

@@ -1,5 +1,6 @@
 package site.fish119.adminsadp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -17,6 +18,7 @@ import java.util.Date;
  */
 @Data
 @MappedSuperclass
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public abstract class BaseEntity implements Serializable {
     private static final long serialVersionUID = -1L;
     @Id

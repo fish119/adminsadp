@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import site.fish119.adminsadp.controller.BaseController;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.security.AuthConstant;
 import site.fish119.adminsadp.security.AuthRequest;
@@ -24,7 +25,7 @@ import java.util.HashMap;
  * @Version V1.0
  */
 @RestController
-public class AuthController {
+public class AuthController extends BaseController {
     private final AuthService service;
 
     @Autowired

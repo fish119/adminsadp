@@ -2,9 +2,9 @@ package site.fish119.adminsadp.controller.sys;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import site.fish119.adminsadp.controller.BaseController;
+import site.fish119.adminsadp.domain.sys.Menu;
 import site.fish119.adminsadp.service.sys.MenuService;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import java.util.Map;
  * @Version V1.0
  */
 @RestController
-public class MenuController {
+public class MenuController extends BaseController {
     @Autowired
     public MenuController(MenuService menuService) {
         this.menuService = menuService;
@@ -30,6 +30,17 @@ public class MenuController {
     public ResponseEntity<?> getAllMenus() {
         Map<String, Object> result = new HashMap<>();
         result.put("data", menuService.findAllMenus());
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(value = "/setting/menus", method = RequestMethod.POST)
+    public ResponseEntity<?> saveMenu(@RequestBody Menu reqBody) {
+        Map<String, Object> result = new HashMap<>();
+        menuService.saveMenu(reqBody);
+        //由于下一句的getCurrentUserMenus()方法会更改本具所获得的结果
+        //因此调用service的getNewCopyMenuList方法，重新生成结果数组并返回给客户端
+        result.put("data", menuService.getNewCopyMenuList(menuService.findAllMenus()));
+        result.put("userMenus", menuService.getCurrentUserMenus());
         return ResponseEntity.ok(result);
     }
 }

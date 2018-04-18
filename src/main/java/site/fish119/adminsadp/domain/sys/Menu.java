@@ -1,6 +1,7 @@
 package site.fish119.adminsadp.domain.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,17 +18,21 @@ import java.util.Set;
  * @Date 2018/4/10 14:13
  * @Version V1.0
  */
-@EqualsAndHashCode(of = {"id"}, callSuper = true)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity
 @Table(name = "sys_menu")
 @Data
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Menu extends BaseEntity {
     private static final long serialVersionUID = -1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String path;
     private String icon;
     private String name;
     private Long sort;
-    private boolean onlySa=false;
+    private Boolean onlySa=false;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
@@ -51,15 +56,32 @@ public class Menu extends BaseEntity {
         if(this.getParent()!=null){
             return this.getParent().getId();
         }else{
-            return null;
+            return this.pid;
         }
     }
 
-    public void setPid(long pid) {
-        if(this.getParent()!=null){
-            this.pid = this.getParent().getId();
-        }else{
-            this.pid =  null;
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
+
+    public Long getPidWithoutParent(){
+        return this.pid;
+    }
+
+    public void setParent(Menu parent) {
+        if (sameParent(parent))
+            return;
+        Menu oldParent = this.parent;
+        this.parent = parent;
+        if (oldParent != null) {
+            oldParent.getChildren().remove(this);
         }
+        if (parent != null) {
+            parent.getChildren().add(this);
+        }
+    }
+
+    private boolean sameParent(Menu newParent) {
+        return parent == null ? newParent == null : parent.equals(newParent);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import site.fish119.adminsadp.controller.BaseController;
 import site.fish119.adminsadp.service.common.CommonService;
 
 /**
@@ -15,7 +16,7 @@ import site.fish119.adminsadp.service.common.CommonService;
  * @Version V1.0
  */
 @RestController
-public class CommonController {
+public class CommonController extends BaseController {
     private final CommonService commonService;
 
     @Autowired

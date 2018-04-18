@@ -1,6 +1,7 @@
 package site.fish119.adminsadp.domain.sys;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import site.fish119.adminsadp.domain.BaseEntity;
@@ -20,6 +21,7 @@ import java.util.Set;
 @Entity()
 @Table(name = "sys_role")
 @Data
+@JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Role extends BaseEntity {
     private static final long serialVersionUID = -1L;
 
