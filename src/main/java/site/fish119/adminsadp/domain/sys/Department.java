@@ -36,19 +36,18 @@ public class Department extends BaseEntity {
     @Transient
     private Long pid;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Department parent;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "parent")
     @OrderBy("sort ASC")
-    @JoinColumn(name = "parent_id")
     private Set<Department> children = new HashSet<>(0);
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "dept_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JsonIgnore
+    @JoinColumn(name = "dept_id")
     private Set<User> users;
 
     public Department getParent() {

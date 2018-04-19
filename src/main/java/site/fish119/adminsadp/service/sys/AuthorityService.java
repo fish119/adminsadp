@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import site.fish119.adminsadp.domain.sys.Authority;
 import site.fish119.adminsadp.repository.sys.AuthorityRepository;
 import site.fish119.adminsadp.service.BaseService;
+
 import java.util.List;
 
 /**
@@ -43,16 +44,16 @@ public class AuthorityService extends BaseService<Authority> {
         authorityRepository.save(dbAuthority);
     }
 
-    @Transactional()
+    @Transactional
     public void delAuthority(Long id) {
         Authority authority = authorityRepository.getOne(id);
-        if (authority.getParent() == null) {
-            authorityRepository.deleteById(id);
-        } else {
+        authority.removeRoles();
+
+        if (authority.getParent() != null) {
             Authority parentAuthority = authorityRepository.getOne(authority.getPid());
             authority.setParent(null);
             parentAuthority.getChildren().remove(authority);
-            authorityRepository.delete(authority);
         }
+        authorityRepository.delete(authority);
     }
 }

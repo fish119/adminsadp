@@ -64,25 +64,24 @@ public class MenuService extends BaseService<Menu> {
         }
     }
 
-    @Transactional()
+    @Transactional
     public void delMenu(Long id) {
         Menu menu = menuRepository.getOne(id);
+        menu.removeRoles();
         menu.setMRoles(null);
-        if (menu.getParent() == null) {
-            menuRepository.deleteById(id);
-        } else {
+        if (menu.getParent() != null) {
             Menu parentMenu = menuRepository.getOne(menu.getPid());
             menu.setParent(null);
-            menu.setMRoles(null);
             parentMenu.getChildren().remove(menu);
-            menuRepository.delete(menu);
+
         }
+        menuRepository.delete(menu);
     }
 
     @Override
     public Menu getCopyBean(Menu menu) {
         Menu tmp = new Menu();
-        BeanUtils.copyProperties(menu,tmp);
+        BeanUtils.copyProperties(menu, tmp);
         tmp.setChildren(new LinkedHashSet<>(getNewCopyList(menu.getChildren())));
         return tmp;
     }

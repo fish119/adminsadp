@@ -81,6 +81,17 @@ public class Menu extends BaseEntity {
         }
     }
 
+    public void removeRoles() {
+        for (Role role : this.getMRoles()) {
+            role.getMenus().remove(this);
+        }
+        this.setMRoles(null);
+        for (Menu child : this.getChildren()) {
+            child.removeRoles();
+            child.setMRoles(null);
+        }
+    }
+
     private boolean sameParent(Menu newParent) {
         return parent == null ? newParent == null : parent.equals(newParent);
     }

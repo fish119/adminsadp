@@ -19,13 +19,14 @@ import java.util.List;
 @Service
 public class DepartmentService extends BaseService<Department> {
     private final DepartmentRepository departmentRepository;
+
     @Autowired
-    public DepartmentService(DepartmentRepository departmentRepository){
+    public DepartmentService(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
 //        this.userRepository = userRepository;
     }
 
-    public List<Department> findAll(){
+    public List<Department> findAll() {
         return departmentRepository.findByParentIsNullOrderBySortAsc();
     }
 
@@ -40,16 +41,15 @@ public class DepartmentService extends BaseService<Department> {
         departmentRepository.save(dbDepartment);
     }
 
-    @Transactional()
+    @Transactional
     public void del(Long id) {
         Department department = departmentRepository.getOne(id);
-        if (department.getParent() == null) {
-            departmentRepository.deleteById(id);
-        } else {
+        department.setUsers(null);
+        if (department.getParent() != null) {
             Department parentDepartment = departmentRepository.getOne(department.getPid());
             department.setParent(null);
             parentDepartment.getChildren().remove(department);
-            departmentRepository.delete(department);
         }
+        departmentRepository.deleteById(id);
     }
 }

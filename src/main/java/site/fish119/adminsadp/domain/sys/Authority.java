@@ -77,7 +77,7 @@ public class Authority extends BaseEntity implements GrantedAuthority {
         this.pid = pid;
     }
 
-    public Long getPidWithoutParent(){
+    public Long getPidWithoutParent() {
         return this.pid;
     }
 
@@ -97,5 +97,16 @@ public class Authority extends BaseEntity implements GrantedAuthority {
 
     private boolean sameParent(Authority newParent) {
         return parent == null ? newParent == null : parent.equals(newParent);
+    }
+
+    public void removeRoles() {
+        for (Role role : this.getRoles()) {
+            role.getAuthorities().remove(this);
+        }
+        this.setRoles(null);
+        for (Authority child : this.getChildren()) {
+            child.removeRoles();
+            child.setRoles(null);
+        }
     }
 }
