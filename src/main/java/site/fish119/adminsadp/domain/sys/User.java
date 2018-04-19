@@ -46,10 +46,6 @@ public class User extends BaseEntity {
     private String email;
 
     @ManyToOne(fetch= FetchType.EAGER)
-    @JoinColumn(name="company_id")
-    private Company company;
-
-    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="dept_id")
     private Department department;
 

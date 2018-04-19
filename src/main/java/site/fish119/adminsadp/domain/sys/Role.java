@@ -17,33 +17,31 @@ import java.util.Set;
  * @Date 2018/4/10 14:05
  * @Version V1.0
  */
-@EqualsAndHashCode(of = {"id"}, callSuper = true)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity()
 @Table(name = "sys_role")
 @Data
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class Role extends BaseEntity {
     private static final long serialVersionUID = -1L;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(nullable = false, unique = true)
     private String name;
-
     private Long sort;
-
-    @Column(name="company_id")
-    private Long companyId;
 
     @JsonIgnore
     @ManyToMany(mappedBy="roles")
     private Set<User> users = new HashSet<>(0);
 
-    @ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Authority.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(joinColumns = @JoinColumn(name = "ROLE_ID"),
             inverseJoinColumns = @JoinColumn(name = "Authority_ID"))
     @OrderBy("sort ASC")
     private Set<Authority> authorities = new HashSet<>(0);
 
-    @ManyToMany(targetEntity = Menu.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Menu.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name="sys_role_menus", joinColumns = @JoinColumn(name = "ROLE_ID"),
             inverseJoinColumns = @JoinColumn(name = "MENU_ID"))
     @OrderBy("sort ASC")

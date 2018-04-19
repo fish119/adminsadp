@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2018-04-18 22:05:53
+Date: 2018-04-19 17:41:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -9888,25 +9888,6 @@ INSERT INTO `sys_authority` VALUES ('8', '2018-04-14 21:21:42', '2018-04-14 21:2
 INSERT INTO `sys_authority` VALUES ('9', '2018-04-14 21:21:42', '2018-04-14 21:21:44', '权限管理', 'ALL', '权限管理', '100', '/setting', null, '\0');
 
 -- ----------------------------
--- Table structure for sys_company
--- ----------------------------
-DROP TABLE IF EXISTS `sys_company`;
-CREATE TABLE `sys_company` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_time` datetime NOT NULL,
-  `update_time` datetime NOT NULL,
-  `address` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `phone_num` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `short_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- ----------------------------
--- Records of sys_company
--- ----------------------------
-
--- ----------------------------
 -- Table structure for sys_department
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_department`;
@@ -9916,13 +9897,10 @@ CREATE TABLE `sys_department` (
   `update_time` datetime NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `sort` bigint(20) DEFAULT NULL,
-  `company_id` bigint(20) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_3c0icpjqmnbs7vsjqwg3cpff3` (`name`),
-  KEY `FK4q0reiwvl0g3jycsfngjrotpv` (`company_id`),
   KEY `FK5bcsdbqycjdgdvti7a55b3ht1` (`parent_id`),
-  CONSTRAINT `FK4q0reiwvl0g3jycsfngjrotpv` FOREIGN KEY (`company_id`) REFERENCES `sys_company` (`id`),
   CONSTRAINT `FK5bcsdbqycjdgdvti7a55b3ht1` FOREIGN KEY (`parent_id`) REFERENCES `sys_department` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -9966,7 +9944,6 @@ CREATE TABLE `sys_role` (
   `update_time` datetime NOT NULL,
   `name` varchar(255) COLLATE utf8_bin NOT NULL,
   `sort` bigint(20) DEFAULT NULL,
-  `company_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_bqy406dtsr7j7d6fawi1ckyn1` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -9974,7 +9951,7 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', '2018-04-13 13:21:10', '2018-04-13 13:21:13', 'SuperAdmin', '0', null);
+INSERT INTO `sys_role` VALUES ('1', '2018-04-13 13:21:10', '2018-04-13 13:21:13', 'SuperAdmin', '0');
 
 -- ----------------------------
 -- Table structure for sys_role_authorities
@@ -10036,24 +10013,21 @@ CREATE TABLE `sys_user` (
   `password` varchar(255) COLLATE utf8_bin NOT NULL,
   `phone` varchar(255) COLLATE utf8_bin NOT NULL,
   `username` varchar(255) COLLATE utf8_bin NOT NULL,
-  `company_id` bigint(20) DEFAULT NULL,
   `dept_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_nxcfa0lkaclthbaye1djy3v0b` (`nickname`),
   UNIQUE KEY `UK_pulp17fvich5aby4m0kc820h6` (`phone`),
   UNIQUE KEY `UK_51bvuyvihefoh4kp5syh2jpi4` (`username`),
   UNIQUE KEY `UK_ahtq5ew3v0kt1n7hf1sgp7p8l` (`email`),
-  KEY `FKpg7thpys3k3cv2hbux6dk5jxt` (`company_id`),
   KEY `FK4w939ws31adtcrmodq3varlii` (`dept_id`),
-  CONSTRAINT `FK4w939ws31adtcrmodq3varlii` FOREIGN KEY (`dept_id`) REFERENCES `sys_department` (`id`),
-  CONSTRAINT `FKpg7thpys3k3cv2hbux6dk5jxt` FOREIGN KEY (`company_id`) REFERENCES `sys_company` (`id`)
+  CONSTRAINT `FK4w939ws31adtcrmodq3varlii` FOREIGN KEY (`dept_id`) REFERENCES `sys_department` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', '2018-04-12 17:04:04', '2018-04-12 17:04:07', '1.png', 'a@a.com', '2018-04-12 17:04:14', '管理员', '$2a$10$bdBafnS979EsOUUICa.br.nCGSd3xLhcz13vD04XXIjQBR3SvYW5e', '18888888888', 'sa', null, null);
-INSERT INTO `sys_user` VALUES ('2', '2018-04-12 17:31:49', '2018-04-12 17:31:49', '2.png', null, '2018-04-12 17:31:49', 'nickName', '$2a$10$bdBafnS979EsOUUICa.br.nCGSd3xLhcz13vD04XXIjQBR3SvYW5e', '18888888881', 'useraa', null, null);
+INSERT INTO `sys_user` VALUES ('1', '2018-04-12 17:04:04', '2018-04-12 17:04:07', '1.png', 'a@a.com', '2018-04-12 17:04:14', '管理员', '$2a$10$bdBafnS979EsOUUICa.br.nCGSd3xLhcz13vD04XXIjQBR3SvYW5e', '18888888888', 'sa', null);
+INSERT INTO `sys_user` VALUES ('2', '2018-04-12 17:31:49', '2018-04-12 17:31:49', '2.png', null, '2018-04-12 17:31:49', 'nickName', '$2a$10$bdBafnS979EsOUUICa.br.nCGSd3xLhcz13vD04XXIjQBR3SvYW5e', '18888888881', 'useraa', null);
 
 -- ----------------------------
 -- Table structure for sys_user_roles

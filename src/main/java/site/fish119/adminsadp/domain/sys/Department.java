@@ -2,6 +2,7 @@ package site.fish119.adminsadp.domain.sys;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,17 +23,18 @@ import java.util.Set;
 @Entity
 @Table(name = "sys_department")
 @Data
+@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
 public class Department extends BaseEntity {
     private static final long serialVersionUID = -1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(nullable = false, unique = true)
     private String name;
-
     private Long sort;
+    @Transient
+    private Long pid;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "parent_id")
@@ -49,10 +51,6 @@ public class Department extends BaseEntity {
     @JsonIgnore
     private Set<User> users;
 
-    @ManyToOne(fetch= FetchType.EAGER)
-    @JoinColumn(name="company_id")
-    private Company company;
-
     public Department getParent() {
         return parent;
     }
@@ -65,12 +63,29 @@ public class Department extends BaseEntity {
         if (oldParent != null) {
             oldParent.getChildren().remove(this);
         }
-        if (parent != null && !parent.getChildren().contains(this)) {
+        if (parent != null) {
             parent.getChildren().add(this);
         }
     }
 
     private boolean sameParent(Department newParent) {
         return parent == null ? newParent == null : parent.equals(newParent);
+    }
+
+    @Transient
+    public Long getPid() {
+        if (this.getParent() != null) {
+            return this.getParent().getId();
+        } else {
+            return this.pid;
+        }
+    }
+
+    public void setPid(Long pid) {
+        this.pid = pid;
+    }
+
+    public Long getPidWithoutParent(){
+        return this.pid;
     }
 }

@@ -26,9 +26,12 @@ public class UserDetailsImple implements UserDetails {
     private final Date lastPasswordResetDate;
     private final Date createTime;
     private final Date updateTime;
+    private final Set<Role> roles;
 
     public UserDetailsImple(Long id, String username, String password,
-                            Collection<? extends GrantedAuthority> authorities, Date lastPasswordResetDate,Date createTime,Date updateTime) {
+                            Collection<? extends GrantedAuthority> authorities,
+                            Date lastPasswordResetDate,Date createTime,Date updateTime,
+                            Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -36,6 +39,7 @@ public class UserDetailsImple implements UserDetails {
         this.lastPasswordResetDate = lastPasswordResetDate;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.roles = roles;
     }
 
     public UserDetailsImple(User user){
@@ -50,6 +54,7 @@ public class UserDetailsImple implements UserDetails {
         this.lastPasswordResetDate = user.getLastPasswordResetDate();
         this.createTime = user.getCreateTime();
         this.updateTime = user.getUpdateTime();
+        this.roles = user.getRoles();
     }
 
     @Override
@@ -106,5 +111,9 @@ public class UserDetailsImple implements UserDetails {
 
     public Date getUpdateTime() {
         return updateTime;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 }

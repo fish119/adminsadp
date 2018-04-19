@@ -35,7 +35,7 @@ public class AuthorityController extends BaseController {
     public ResponseEntity<?> saveMenu(@RequestBody Authority reqBody) {
         Map<String, Object> result = new HashMap<>();
         authorityService.saveAuthority(reqBody);
-        result.put("data", authorityService.getNewCopyList(authorityService.findAllAuthorities()));
+        result.put("data", authorityService.findAllAuthorities());
         return ResponseEntity.ok(result);
     }
 
@@ -43,7 +43,7 @@ public class AuthorityController extends BaseController {
     public ResponseEntity<?> delMenu(@PathVariable("id") long id) {
         Map<String, Object> result = new HashMap<>();
         authorityService.delAuthority(id);
-        result.put("data", authorityService.getNewCopyList(authorityService.findAllAuthorities()));
+        result.put("data", authorityService.findAllAuthorities());
         return ResponseEntity.ok(result);
     }
 }

@@ -1,14 +1,11 @@
 package site.fish119.adminsadp.service.sys;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.fish119.adminsadp.domain.sys.Authority;
 import site.fish119.adminsadp.repository.sys.AuthorityRepository;
 import site.fish119.adminsadp.service.BaseService;
-
-import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
@@ -57,13 +54,5 @@ public class AuthorityService extends BaseService<Authority> {
             parentAuthority.getChildren().remove(authority);
             authorityRepository.delete(authority);
         }
-    }
-
-    @Override
-    public Authority getCopyBean(Authority authority) {
-        Authority tmp = new Authority();
-        BeanUtils.copyProperties(authority, tmp);
-        tmp.setChildren(new LinkedHashSet<>(getNewCopyList(authority.getChildren())));
-        return tmp;
     }
 }

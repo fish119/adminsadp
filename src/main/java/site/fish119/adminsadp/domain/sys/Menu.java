@@ -43,7 +43,7 @@ public class Menu extends BaseEntity {
     @OrderBy("sort ASC")
     private Set<Menu> children = new HashSet<>(0);
 
-    @ManyToMany(mappedBy="menus")
+    @ManyToMany(mappedBy="menus",cascade = CascadeType.ALL)
     @OrderBy("sort ASC")
     @Getter(onMethod = @__( @JsonIgnore ))
     private Set<Role> mRoles = new HashSet<>(0);

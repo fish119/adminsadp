@@ -6,7 +6,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import site.fish119.adminsadp.domain.BaseEntity;
 import site.fish119.adminsadp.domain.sys.Menu;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.repository.sys.MenuRepository;
@@ -15,7 +14,6 @@ import site.fish119.adminsadp.security.UserDetailsImple;
 import site.fish119.adminsadp.service.BaseService;
 import site.fish119.adminsadp.utils.MainUtil;
 
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -69,11 +67,13 @@ public class MenuService extends BaseService<Menu> {
     @Transactional()
     public void delMenu(Long id) {
         Menu menu = menuRepository.getOne(id);
+        menu.setMRoles(null);
         if (menu.getParent() == null) {
             menuRepository.deleteById(id);
         } else {
             Menu parentMenu = menuRepository.getOne(menu.getPid());
             menu.setParent(null);
+            menu.setMRoles(null);
             parentMenu.getChildren().remove(menu);
             menuRepository.delete(menu);
         }
