@@ -49,7 +49,7 @@ public class User extends BaseEntity {
     @JoinColumn(name="dept_id")
     private Department department;
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     @OrderBy("sort ASC")

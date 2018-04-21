@@ -25,6 +25,7 @@ import java.util.List;
  * @Version V1.0
  */
 @Service
+@Transactional
 public class MenuService extends BaseService<Menu> {
     @Autowired
     public MenuService(MenuRepository menuRepository, UserRepository userRepository) {
@@ -73,7 +74,6 @@ public class MenuService extends BaseService<Menu> {
             Menu parentMenu = menuRepository.getOne(menu.getPid());
             menu.setParent(null);
             parentMenu.getChildren().remove(menu);
-
         }
         menuRepository.delete(menu);
     }

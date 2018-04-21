@@ -47,7 +47,7 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     private Set<Authority> children = new HashSet<>(0);
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "authorities", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "authorities", cascade = CascadeType.ALL)
     @OrderBy("sort ASC")
     private Set<Role> roles = new HashSet<>(0);
 
