@@ -1,6 +1,7 @@
 package site.fish119.adminsadp.repository.sys;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import site.fish119.adminsadp.domain.sys.User;
@@ -13,6 +14,10 @@ import site.fish119.adminsadp.domain.sys.User;
  * @Version V1.0
  */
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User,Long>,QuerydslPredicateExecutor<User> {
     User findByUsername(@Param("username") final String username);
+//    User findFirstByPhoneAndIdNot(@Param("phone") final String phone,@Param("id") final Long id);
+//    User findFirstByNicknameAndIdNot(@Param("nickname") final String nickname,@Param("id") final Long id);
+//    User findFirstByUsernameAndIdNot(@Param("username") final String username,@Param("id") final Long id);
+//    User findFirstByEmailAndIdNot(@Param("email") final String email,@Param("id") final Long id);
 }
