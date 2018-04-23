@@ -1,6 +1,7 @@
 package site.fish119.adminsadp.service.sys;
 
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,21 +37,19 @@ public class UserService extends BaseService<User> {
     @Value("${web.upload-path}")
     private String avatarPath;
 
-    private Iterable<User> findAll(Integer page, Integer size, String sortColumn, String direction) {
-        return userRepository.findAll(MainUtil.getPageRequest(page, size, sortColumn, direction));
-    }
-
-    public Iterable<User> findUsers(String searchStr, Integer page, Integer size, String sortColumn, String direction) {
-        if (StringUtils.isEmpty(searchStr)) {
-            return this.findAll(page, size, sortColumn, direction);
-        } else {
-            QUser qUser = QUser.user;
-            Predicate predicate = qUser.username.containsIgnoreCase(searchStr.trim())
+    public Iterable<User> findUsers(String searchStr,Long departId, Integer page, Integer size, String sortColumn, String direction) {
+        QUser qUser = QUser.user;
+        Predicate predicate = qUser.id.isNotNull();
+        if(!StringUtils.isEmpty(searchStr)){
+            predicate = ((BooleanExpression) predicate).and(qUser.username.containsIgnoreCase(searchStr.trim())
                     .or(qUser.nickname.containsIgnoreCase(searchStr.trim()))
                     .or(qUser.phone.containsIgnoreCase(searchStr.trim()))
-                    .or(qUser.email.containsIgnoreCase(searchStr.trim()));
-            return userRepository.findAll(predicate, MainUtil.getPageRequest(page, size, sortColumn, direction));
+                    .or(qUser.email.containsIgnoreCase(searchStr.trim())));
         }
+        if(departId!=null){
+            predicate = ((BooleanExpression) predicate).and(qUser.department.id.eq(departId));
+        }
+        return userRepository.findAll(predicate, MainUtil.getPageRequest(page, size, sortColumn, direction));
     }
 
     @Transactional
@@ -62,5 +61,9 @@ public class UserService extends BaseService<User> {
         user.setPassword(encoder.encode(newPassword));
         user.setLastPasswordResetDate(new Date());
         userRepository.save(user);
+    }
+
+    public boolean checkUsernameUnique(String username){
+        return userRepository.findByUsername(username)!=null;
     }
 }

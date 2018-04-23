@@ -31,12 +31,21 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/setting/users", method = RequestMethod.GET)
     public ResponseEntity<?> getPageAndSortUsers(
             @RequestParam(name = "searchStr", required = false) String searchStr,
+            @RequestParam(name = "department", required = false) Long departId,
             @RequestParam(name = "currentPage", required = false) Integer currentPage,
             @RequestParam(name = "pageSize", required = false) Integer pageSize,
             @RequestParam(name = "sortColumn", required = false) String sortColumn,
             @RequestParam(name = "direction", required = false) String direction) {
         Map<String, Object> result = new HashMap<>();
-        result.put("data", userService.findUsers(searchStr, currentPage, pageSize, sortColumn, direction));
+        result.put("data", userService.findUsers(searchStr,departId, currentPage, pageSize, sortColumn, direction));
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(value = "/setting/checkUsernameUnique", method = RequestMethod.GET)
+    public ResponseEntity<?> checkUsernameUnique(
+            @RequestParam(name = "username", required = true) String username) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", userService.checkUsernameUnique(username));
         return ResponseEntity.ok(result);
     }
 }
