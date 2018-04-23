@@ -110,7 +110,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/druid/**", "/auth/**", "/webjars/**").permitAll()
+                .antMatchers("/druid/**", "/auth/**", "/webjars/**","/api/**").permitAll()
                 .antMatchers(
                         HttpMethod.GET,
                         "/",

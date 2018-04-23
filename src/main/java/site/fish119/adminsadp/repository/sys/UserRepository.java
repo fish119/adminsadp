@@ -16,8 +16,7 @@ import site.fish119.adminsadp.domain.sys.User;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long>,QuerydslPredicateExecutor<User> {
     User findByUsername(@Param("username") final String username);
-//    User findFirstByPhoneAndIdNot(@Param("phone") final String phone,@Param("id") final Long id);
-//    User findFirstByNicknameAndIdNot(@Param("nickname") final String nickname,@Param("id") final Long id);
-//    User findFirstByUsernameAndIdNot(@Param("username") final String username,@Param("id") final Long id);
-//    User findFirstByEmailAndIdNot(@Param("email") final String email,@Param("id") final Long id);
+    Long countByNickname(@Param("nickname") final String nickname);
+    Long countByPhone(@Param("phone") final String phone);
+    Long countByEmail(@Param("email") final String email);
 }

@@ -41,11 +41,35 @@ public class UserController extends BaseController {
         return ResponseEntity.ok(result);
     }
 
-    @RequestMapping(value = "/setting/checkUsernameUnique", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/user/checkUsernameUnique", method = RequestMethod.GET)
     public ResponseEntity<?> checkUsernameUnique(
-            @RequestParam(name = "username", required = true) String username) {
+            @RequestParam(name = "username") String username) {
         Map<String, Object> result = new HashMap<>();
         result.put("data", userService.checkUsernameUnique(username));
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(value = "/api/user/checkNicknameUnique", method = RequestMethod.GET)
+    public ResponseEntity<?> checkNicknameUnique(
+            @RequestParam(name = "nickname") String nickname) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", userService.checkNicknameUnique(nickname));
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(value = "/api/user/checkPhoneUnique", method = RequestMethod.GET)
+    public ResponseEntity<?> checkPhoneUnique(
+            @RequestParam(name = "phone") String phone) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", userService.checkPhoneUnique(phone));
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(value = "/api/user/checkEmailUnique", method = RequestMethod.GET)
+    public ResponseEntity<?> checkEmailUnique(
+            @RequestParam(name = "email") String email) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", userService.checkEmailUnique(email));
         return ResponseEntity.ok(result);
     }
 }

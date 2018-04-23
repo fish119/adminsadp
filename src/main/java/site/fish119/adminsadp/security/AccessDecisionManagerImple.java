@@ -31,6 +31,7 @@ public class AccessDecisionManagerImple implements AccessDecisionManager {
         AntPathRequestMatcher matcher;
         if (url.contains("/druid")||
                 url.contains("/auth") ||
+                url.contains("/api/") ||
                 url.contains("/logfile") ||
                 url.contains(".html") ||
                 url.contains(".css") ||

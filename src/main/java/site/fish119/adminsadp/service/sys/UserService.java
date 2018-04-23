@@ -64,6 +64,21 @@ public class UserService extends BaseService<User> {
     }
 
     public boolean checkUsernameUnique(String username){
-        return userRepository.findByUsername(username)!=null;
+        return userRepository.findByUsername(username)==null;
+    }
+
+    public boolean checkNicknameUnique(String nickName){
+        Long count = userRepository.countByNickname(nickName);
+        return count==null||count==0;
+    }
+
+    public boolean checkPhoneUnique(String phone){
+        Long count = userRepository.countByPhone(phone);
+        return count==null||count==0;
+    }
+
+    public boolean checkEmailUnique(String email){
+        Long count = userRepository.countByEmail(email);
+        return count==null||count==0;
     }
 }
