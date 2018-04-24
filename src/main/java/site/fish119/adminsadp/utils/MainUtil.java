@@ -6,7 +6,6 @@ import org.springframework.data.domain.Sort;
 import site.fish119.adminsadp.domain.sys.Menu;
 import site.fish119.adminsadp.domain.sys.Role;
 
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -17,7 +16,7 @@ import java.util.Set;
  * @Version V1.0
  */
 public class MainUtil {
-    public static List<Menu> cleanChildrenMenu(List<Menu> menus, Set<Role> roles) {
+    public static Iterable<Menu> cleanChildrenMenu(Iterable<Menu> menus, Set<Role> roles) {
         for (Menu menu : menus) {
             for (Role role : roles) {
                 menu.getChildren().removeIf(

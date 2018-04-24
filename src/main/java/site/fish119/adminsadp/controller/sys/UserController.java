@@ -47,6 +47,14 @@ public class UserController extends BaseController {
         return ResponseEntity.ok(result);
     }
 
+    @RequestMapping(value = "/setting/user/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+        Map<String, Object> result = new HashMap<>();
+        userService.delete(id);
+        result.put("data", userService.findUsers(null, null, 0, 10, "id", "DESC"));
+        return ResponseEntity.ok(result);
+    }
+
     @RequestMapping(value = "/api/user/checkUsernameUnique", method = RequestMethod.GET)
     public ResponseEntity<?> checkUsernameUnique(
             @RequestParam(name = "username") String username,

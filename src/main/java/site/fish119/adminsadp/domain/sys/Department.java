@@ -1,9 +1,7 @@
 package site.fish119.adminsadp.domain.sys;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import site.fish119.adminsadp.domain.BaseEntity;
@@ -19,7 +17,7 @@ import java.util.Set;
  * @Date 2018/4/6 16:45
  * @Version V1.0
  */
-@EqualsAndHashCode(of = {"id"}, callSuper = true)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity
 @Table(name = "sys_department")
 @Data
@@ -38,14 +36,14 @@ public class Department extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIgnore
     private Department parent;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY ,mappedBy = "parent")
     @OrderBy("sort ASC")
     private Set<Department> children = new HashSet<>(0);
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JsonIgnore
     @JoinColumn(name = "dept_id")
     private Set<User> users;

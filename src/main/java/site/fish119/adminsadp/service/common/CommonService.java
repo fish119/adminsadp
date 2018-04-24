@@ -39,7 +39,7 @@ public class CommonService  extends BaseService<BaseEntity> {
             UserDetailsImple userDetails = (UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userRepository.findByUsername(userDetails.getUsername());
             result.put("user", user);
-            result.put("menus", MainUtil.cleanChildrenMenu(menuRepository.findByMRolesAndParentIsNullOrderBySortAsc(user.getRoles()), user.getRoles()));
+            result.put("menus", MainUtil.cleanChildrenMenu(menuRepository.findByMRolesInAndParentIsNullOrderBySortAsc(user.getRoles()), user.getRoles()));
         } else {
             throw new BadCredentialsException("用户未登录");
         }

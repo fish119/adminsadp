@@ -54,12 +54,12 @@ public class MenuService extends BaseService<Menu> {
         menuRepository.save(dbMenu);
     }
 
-    public List<Menu> getCurrentUserMenus() {
+    public Iterable<Menu> getCurrentUserMenus() {
         if (SecurityContextHolder.getContext().getAuthentication() != null
                 && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null) {
             UserDetailsImple userDetails = (UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userRepository.findByUsername(userDetails.getUsername());
-            return MainUtil.cleanChildrenMenu(menuRepository.findByMRolesAndParentIsNullOrderBySortAsc(user.getRoles()), user.getRoles());
+            return MainUtil.cleanChildrenMenu(menuRepository.findByMRolesInAndParentIsNullOrderBySortAsc(user.getRoles()), user.getRoles());
         } else {
             throw new BadCredentialsException("用户未登录");
         }

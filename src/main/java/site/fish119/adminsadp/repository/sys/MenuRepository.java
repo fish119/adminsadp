@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @Repository
 public interface MenuRepository extends JpaRepository<Menu,Long> {
-    List<Menu> findByMRolesAndParentIsNullOrderBySortAsc(final Set<Role> roles);
+    Set<Menu> findByMRolesInAndParentIsNullOrderBySortAsc(final Set<Role> roles);
     List<Menu> findByParentIsNullOrderBySortAsc();
     Set<Menu> findByIdIn(final Long[] ids);
 }

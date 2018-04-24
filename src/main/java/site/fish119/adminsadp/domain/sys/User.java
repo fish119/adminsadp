@@ -18,13 +18,17 @@ import java.util.Set;
  * @Date 2018/4/6 16:50
  * @Version V1.0
  */
-@EqualsAndHashCode(of = {"id"}, callSuper = true)
+@EqualsAndHashCode(of = {"id"}, callSuper = false)
 @Entity
 @Table(name = "sys_user")
 @Data
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
 public class User extends BaseEntity {
     private static final long serialVersionUID = -1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -44,7 +48,7 @@ public class User extends BaseEntity {
 
     private String email;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name="dept_id")
     private Department department;
 
@@ -53,4 +57,9 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
     @OrderBy("sort ASC")
     private Set<Role> roles = new HashSet<>(0);
+    @PreRemove
+    private void preRemove(){
+        this.setRoles(null);
+        this.setDepartment(null);
+    }
 }
