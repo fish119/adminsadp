@@ -42,7 +42,6 @@ public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String phone;
 
-    @Column(unique = true)
     private String email;
 
     @ManyToOne(fetch= FetchType.EAGER)
