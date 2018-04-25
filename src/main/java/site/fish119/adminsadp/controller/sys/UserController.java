@@ -90,4 +90,12 @@ public class UserController extends BaseController {
         result.put("data", userService.checkEmailUnique(email,id));
         return ResponseEntity.ok(result);
     }
+
+    @RequestMapping(value = "/setting/users/setDefaultPassword", method = RequestMethod.POST)
+    public ResponseEntity<?> setDefaultPassword(@RequestBody Long id) {
+        Map<String, String> result = new HashMap<>();
+        userService.setDefaultPassword(id);
+        result.put("data", "SUCCESS");
+        return ResponseEntity.ok(result);
+    }
 }

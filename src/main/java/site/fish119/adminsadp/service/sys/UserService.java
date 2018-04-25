@@ -6,7 +6,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -37,7 +36,7 @@ public class UserService extends BaseService<User> {
     private final AuthenticationManager authenticationManager;
     private final DepartmentRepository departmentRepository;
 
-    public UserService(UserRepository userRepository, AuthenticationManager authenticationManager,DepartmentRepository departmentRepository) {
+    public UserService(UserRepository userRepository, AuthenticationManager authenticationManager, DepartmentRepository departmentRepository) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.departmentRepository = departmentRepository;
@@ -77,7 +76,7 @@ public class UserService extends BaseService<User> {
             PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
             user.setPassword(encoder.encode(Md5Util.encode(defaultPassword)));
             user.setLastPasswordResetDate(new Date());
-            if(user.getDepartment()!=null){
+            if (user.getDepartment() != null) {
                 user.setDepartment(departmentRepository.getOne(user.getDepartment().getId()));
             }
             Set<Role> roles = user.getRoles();
@@ -89,7 +88,7 @@ public class UserService extends BaseService<User> {
             User dbUser = userRepository.getOne(user.getId());
             user.setPassword(dbUser.getPassword());
             BeanUtils.copyProperties(user, dbUser);
-            if(user.getDepartment()!=null){
+            if (user.getDepartment() != null) {
                 dbUser.setDepartment(departmentRepository.getOne(user.getDepartment().getId()));
             }
             userRepository.save(dbUser);
@@ -97,7 +96,7 @@ public class UserService extends BaseService<User> {
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
@@ -106,8 +105,17 @@ public class UserService extends BaseService<User> {
         UsernamePasswordAuthenticationToken upToken = new UsernamePasswordAuthenticationToken(username, oldPassword);
         authenticationManager.authenticate(upToken);
         User user = userRepository.findByUsername(username);
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
         user.setPassword(encoder.encode(newPassword));
+        user.setLastPasswordResetDate(new Date());
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void setDefaultPassword(Long id) {
+        User user = userRepository.getOne(id);
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        user.setPassword(encoder.encode(Md5Util.encode(defaultPassword)));
         user.setLastPasswordResetDate(new Date());
         userRepository.save(user);
     }
