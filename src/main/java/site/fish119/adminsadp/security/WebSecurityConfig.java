@@ -94,24 +94,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        //important 跨域配置，重要！
-//        httpSecurity.cors().configurationSource(httpServletRequest -> {
-//            CorsConfiguration cc = new CorsConfiguration().applyPermitDefaultValues();
-//            cc.addAllowedMethod("*");
-//            cc.addAllowedOrigin("http://localhost:8000/");
-//            cc.addAllowedOrigin("http://localhost");
-//            cc.addAllowedHeader("*");
-//            cc.addExposedHeader("x-auth-token");
-//            cc.addExposedHeader("x-total-count");
-//            return cc;
-//        });
         httpSecurity
                 .csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
-                .antMatchers("/druid/**", "/auth/**", "/webjars/**","/api/**").permitAll()
+                .antMatchers("/druid/**", "/auth/**", "/webjars/**", "/api/**",
+                        "/article/categories","/article/article").permitAll()
                 .antMatchers(
                         HttpMethod.GET,
                         "/",

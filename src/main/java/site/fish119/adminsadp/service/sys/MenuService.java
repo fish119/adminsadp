@@ -58,7 +58,7 @@ public class MenuService extends BaseService<Menu> {
         if (SecurityContextHolder.getContext().getAuthentication() != null
                 && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null) {
             UserDetailsImple userDetails = (UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            User user = userRepository.findByUsername(userDetails.getUsername());
+            User user = userRepository.getOne(userDetails.getId());
             return MainUtil.cleanChildrenMenu(menuRepository.findByMRolesInAndParentIsNullOrderBySortAsc(user.getRoles()), user.getRoles());
         } else {
             throw new BadCredentialsException("用户未登录");
