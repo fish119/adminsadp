@@ -1,6 +1,7 @@
 package site.fish119.adminsadp.service;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import site.fish119.adminsadp.domain.BaseEntity;
@@ -19,6 +20,15 @@ import java.util.List;
  * @Version V1.0
  */
 public abstract class BaseService<T extends BaseEntity> {
+    @Value("${web.upload-path}")
+    protected String avatarPath;
+
+    @Value("${default-password}")
+    protected String defaultPassword;
+
+    @Value("default-page-size")
+    protected String defaultPageSize;
+
     public List<T> getNewCopyList(Iterable<T> oldList) {
         List<T> data = new ArrayList<>();
         for (T t : oldList) {

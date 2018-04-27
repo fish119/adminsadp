@@ -30,7 +30,7 @@ public class MainUtil {
     private static Sort getSort(String sortColumn, String direction) {
         Sort.Direction dr = Sort.Direction.ASC;
         if (direction != null && direction.equals("DESC")) dr = Sort.Direction.DESC;
-        if (sortColumn == null) sortColumn = "username";
+        if (sortColumn == null) sortColumn = "id";
         return new Sort(dr, sortColumn);
     }
 

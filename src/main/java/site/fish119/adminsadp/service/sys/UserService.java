@@ -3,7 +3,6 @@ package site.fish119.adminsadp.service.sys;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,15 +47,6 @@ public class UserService extends BaseService<User> {
         this.authenticationManager = authenticationManager;
         this.departmentRepository = departmentRepository;
     }
-
-    @Value("${web.upload-path}")
-    private String avatarPath;
-
-    @Value("${default-password}")
-    private String defaultPassword;
-
-    @Value("default-page-size")
-    private String defaultPageSize;
 
     public Iterable<User> findUsers(String searchStr, Long departId, Integer page, Integer size, String sortColumn, String direction) {
         QUser qUser = QUser.user;

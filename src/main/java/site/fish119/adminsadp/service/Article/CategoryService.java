@@ -3,7 +3,7 @@ package site.fish119.adminsadp.service.Article;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.fish119.adminsadp.domain.article.Category;
-import site.fish119.adminsadp.repository.Article.CategoryRepository;
+import site.fish119.adminsadp.repository.article.CategoryRepository;
 import site.fish119.adminsadp.service.BaseService;
 
 import java.util.List;

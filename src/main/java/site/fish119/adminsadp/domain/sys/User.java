@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import site.fish119.adminsadp.domain.BaseEntity;
+import site.fish119.adminsadp.domain.article.Article;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -51,6 +52,11 @@ public class User extends BaseEntity {
     @ManyToOne(fetch= FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name="dept_id")
     private Department department;
+
+    @OneToMany(fetch= FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinColumn(name="author_id")
+    @JsonIgnore
+    private Set<Article> articles;
 
     @ManyToMany(targetEntity = Role.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(joinColumns = @JoinColumn(name = "USER_ID"),

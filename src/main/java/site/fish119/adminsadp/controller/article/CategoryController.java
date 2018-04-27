@@ -1,5 +1,6 @@
 package site.fish119.adminsadp.controller.article;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.fish119.adminsadp.controller.BaseController;
@@ -19,6 +20,7 @@ import java.util.Map;
 @RestController
 public class CategoryController extends BaseController {
     private final CategoryService categoryService;
+    @Autowired
     public CategoryController(CategoryService categoryService){
         this.categoryService = categoryService;
     }
