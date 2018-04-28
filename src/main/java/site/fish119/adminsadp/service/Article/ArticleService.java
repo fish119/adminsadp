@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import site.fish119.adminsadp.domain.article.Article;
 import site.fish119.adminsadp.domain.article.QArticle;
@@ -48,6 +49,15 @@ public class ArticleService extends BaseService<Article> {
         String sortCol = StringUtils.isEmpty(sortColumn) ? "id" : sortColumn;
         String desc = StringUtils.isEmpty(direction) ? "DESC" : direction;
         return articleRepository.findAll(predicate, getPageRequest(pages, pageSize, sortCol, desc));
+    }
+
+    public Article getOne(Long id){
+        return articleRepository.getOne(id);
+    }
+
+    @Transactional
+    public Article save(Article article){
+        return articleRepository.save(article);
     }
 
     private Sort getSort(String sortColumn, String direction) {

@@ -2,11 +2,9 @@ package site.fish119.adminsadp.controller.article;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.fish119.adminsadp.controller.BaseController;
+import site.fish119.adminsadp.domain.article.Article;
 import site.fish119.adminsadp.service.Article.ArticleService;
 
 import java.util.HashMap;
@@ -38,6 +36,20 @@ public class ArticleController extends BaseController {
             @RequestParam(name = "direction", required = false) String direction) {
         Map<String, Object> result = new HashMap<>();
         result.put("data", articleService.findArticles(searchStr, categoryId, currentPage, pageSize, sortColumn, direction));
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(value = "/article/article/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getOne(@PathVariable(name = "id") Long id){
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", articleService.getOne(id));
+        return ResponseEntity.ok(result);
+    }
+
+    @RequestMapping(value = "/article/articles", method = RequestMethod.POST)
+    public ResponseEntity<?> save(@RequestBody Article reqBody) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("data", articleService.save(reqBody));
         return ResponseEntity.ok(result);
     }
 }

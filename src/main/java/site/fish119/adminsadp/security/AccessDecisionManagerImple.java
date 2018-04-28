@@ -34,6 +34,7 @@ public class AccessDecisionManagerImple implements AccessDecisionManager {
                 url.contains("/api/") ||
                 url.contains("/article/categories") ||
                 url.contains("/article/articles") ||
+                url.contains("/article/article")||
                 url.contains("/logfile") ||
                 url.contains(".html") ||
                 url.contains(".css") ||

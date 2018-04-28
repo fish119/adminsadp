@@ -33,7 +33,7 @@ public class CategoryController extends BaseController {
     }
 
     @RequestMapping(value = "/article/category", method = RequestMethod.POST)
-    public ResponseEntity<?> saveMenu(@RequestBody Category reqBody) {
+    public ResponseEntity<?> save(@RequestBody Category reqBody) {
         Map<String, Object> result = new HashMap<>();
         categoryService.save(reqBody);
         result.put("data", categoryService.findAll());
