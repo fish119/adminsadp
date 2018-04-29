@@ -9,13 +9,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import site.fish119.adminsadp.domain.article.Article;
 import site.fish119.adminsadp.domain.article.QArticle;
 import site.fish119.adminsadp.repository.article.ArticleRepository;
 import site.fish119.adminsadp.service.BaseService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @Project adminsadp
@@ -58,6 +64,14 @@ public class ArticleService extends BaseService<Article> {
     @Transactional
     public Article save(Article article){
         return articleRepository.save(article);
+    }
+
+    @Transactional
+    public String uploadPic(MultipartFile file) throws IOException {
+        String filename = UUID.randomUUID() + ".png";
+        Files.copy(file.getInputStream(), Paths.get(avatarPath + "/avatar/").resolve(filename),
+                StandardCopyOption.REPLACE_EXISTING);
+        return filename;
     }
 
     private Sort getSort(String sortColumn, String direction) {
