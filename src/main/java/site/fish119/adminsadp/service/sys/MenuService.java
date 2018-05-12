@@ -25,7 +25,6 @@ import java.util.List;
  * @Version V1.0
  */
 @Service
-@Transactional
 public class MenuService extends BaseService<Menu> {
     @Autowired
     public MenuService(MenuRepository menuRepository, UserRepository userRepository) {
@@ -51,7 +50,7 @@ public class MenuService extends BaseService<Menu> {
             dbMenu.setOnlySa(menu.getOnlySa());
         }
         dbMenu.setParent(menu.getPidWithoutParent() == null || menu.getPidWithoutParent() == 0 ? null : menuRepository.getOne(menu.getPidWithoutParent()));
-        menuRepository.save(dbMenu);
+        menuRepository.saveAndFlush(dbMenu);
     }
 
     public Iterable<Menu> getCurrentUserMenus() {
