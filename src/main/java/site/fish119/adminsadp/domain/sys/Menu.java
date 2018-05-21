@@ -32,7 +32,7 @@ public class Menu extends BaseEntity {
     private String icon;
     private String name;
     private Long sort;
-    private Boolean onlySa=false;
+    private Boolean hideInMenu=false;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "parent_id")

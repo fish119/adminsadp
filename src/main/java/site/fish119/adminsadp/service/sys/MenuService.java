@@ -47,7 +47,7 @@ public class MenuService extends BaseService<Menu> {
             dbMenu.setName(menu.getName());
             dbMenu.setSort(menu.getSort());
             dbMenu.setPath(menu.getPath());
-            dbMenu.setOnlySa(menu.getOnlySa());
+            dbMenu.setHideInMenu(menu.getHideInMenu());
         }
         dbMenu.setParent(menu.getPidWithoutParent() == null || menu.getPidWithoutParent() == 0 ? null : menuRepository.getOne(menu.getPidWithoutParent()));
         menuRepository.saveAndFlush(dbMenu);
