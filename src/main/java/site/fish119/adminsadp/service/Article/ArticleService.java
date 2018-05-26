@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import site.fish119.adminsadp.domain.article.Article;
 import site.fish119.adminsadp.domain.article.QArticle;
 import site.fish119.adminsadp.repository.article.ArticleRepository;
+import site.fish119.adminsadp.repository.article.CategoryRepository;
 import site.fish119.adminsadp.service.BaseService;
 
 import java.io.IOException;
@@ -33,9 +34,11 @@ import java.util.UUID;
 @Service
 public class ArticleService extends BaseService<Article> {
     private final ArticleRepository articleRepository;
+    private final CategoryRepository categoryRepository;
     @Autowired
-    public ArticleService(ArticleRepository articleRepository){
+    public ArticleService(ArticleRepository articleRepository,CategoryRepository categoryRepository){
         this.articleRepository = articleRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     public Iterable<Article> findArticles(String searchStr,Long categoryId, Integer page, Integer size, String sortColumn, String direction){
@@ -63,6 +66,9 @@ public class ArticleService extends BaseService<Article> {
 
     @Transactional
     public Article save(Article article){
+        if(article.getCategory()!=null){
+            article.setCategory(categoryRepository.getOne(article.getCategory().getId()));
+        }
         return articleRepository.save(article);
     }
 
