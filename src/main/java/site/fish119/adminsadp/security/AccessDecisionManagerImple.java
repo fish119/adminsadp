@@ -59,7 +59,7 @@ public class AccessDecisionManagerImple implements AccessDecisionManager {
                 }
             }
         }
-        throw new AccessDeniedException("未授权，请联系管理员");
+        throw new AccessDeniedException("没有访问权限，未授权，请联系管理员");
     }
 
     @Override
