@@ -1,5 +1,6 @@
 package site.fish119.adminsadp.service.auth;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,10 +13,8 @@ import org.springframework.stereotype.Service;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.repository.sys.RoleRepository;
 import site.fish119.adminsadp.repository.sys.UserRepository;
-import site.fish119.adminsadp.security.AuthConstant;
-import site.fish119.adminsadp.security.AuthRequest;
-import site.fish119.adminsadp.security.TokenUtil;
-import site.fish119.adminsadp.security.UserDetailsImple;
+import site.fish119.adminsadp.security.Constant;
+import site.fish119.adminsadp.security.JwtTokenUtil;
 import site.fish119.adminsadp.service.BaseService;
 
 import java.util.Date;
@@ -32,7 +31,7 @@ import java.util.HashSet;
 public class AuthService  extends BaseService<User> {
     @Autowired
     public AuthService(AuthenticationManager authenticationManager, UserRepository userRepository,
-                       UserDetailsService userDetailsService, TokenUtil tokenUtil, RoleRepository roleRepository) {
+                       UserDetailsService userDetailsService, JwtTokenUtil tokenUtil, RoleRepository roleRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;
@@ -43,7 +42,7 @@ public class AuthService  extends BaseService<User> {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
-    private final TokenUtil tokenUtil;
+    private final JwtTokenUtil tokenUtil;
     private final RoleRepository roleRepository;
 
     public String login(String username, String password) {
@@ -56,22 +55,22 @@ public class AuthService  extends BaseService<User> {
     }
 
     public String refresh(String oldToken) {
-        final String token = oldToken.substring(AuthConstant.tokenPrefix.length());
+        final String token = oldToken.substring(Constant.TOKEN_PREFIX.length());
         String username = tokenUtil.getUsernameFromToken(token);
-        UserDetailsImple user = (UserDetailsImple) userDetailsService.loadUserByUsername(username);
+        User user = (User) userDetailsService.loadUserByUsername(username);
         if (tokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
             return tokenUtil.refreshToken(token);
         }
         return null;
     }
 
-    public User register(AuthRequest requestUser) {
-        final String username = requestUser.getUsername();
+    public User register(JSONObject requestUser) {
+        final String username = requestUser.getString("username");
         if (userRepository.findByUsername(username) != null) {
             return null;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        final String rawPassword = requestUser.getPassword();
+        final String rawPassword = requestUser.getString("password");
         User userToAdd = new User();
         userToAdd.setUsername(username);
         userToAdd.setPassword(encoder.encode(rawPassword));
@@ -81,13 +80,13 @@ public class AuthService  extends BaseService<User> {
         return userRepository.save(userToAdd);
     }
 
-    public User registerAdmin(AuthRequest requestUser) {
-        final String username = requestUser.getUsername();
+    public User registerAdmin(JSONObject requestUser) {
+        final String username = requestUser.getString("username");
         if (userRepository.findByUsername(username) != null) {
             return null;
         }
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        final String rawPassword = requestUser.getPassword();
+        final String rawPassword = requestUser.getString("password");
         User userToAdd = new User();
         userToAdd.setUsername(username);
         userToAdd.setNickname("nickName");

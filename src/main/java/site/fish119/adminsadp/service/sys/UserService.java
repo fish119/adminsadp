@@ -6,6 +6,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,11 +20,11 @@ import site.fish119.adminsadp.domain.sys.Role;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.repository.sys.DepartmentRepository;
 import site.fish119.adminsadp.repository.sys.UserRepository;
-import site.fish119.adminsadp.security.UserDetailsImple;
 import site.fish119.adminsadp.service.BaseService;
 import site.fish119.adminsadp.utils.MainUtil;
 import site.fish119.adminsadp.utils.Md5Util;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -37,15 +40,22 @@ import java.util.Set;
  * @Version V1.0
  */
 @Service
-public class UserService extends BaseService<User> {
-    private final UserRepository userRepository;
-    private final AuthenticationManager authenticationManager;
-    private final DepartmentRepository departmentRepository;
+public class UserService extends BaseService<User> implements UserDetailsService {
+    @Resource
+    private UserRepository userRepository;
+    @Resource
+    private AuthenticationManager authenticationManager;
+    @Resource
+    private DepartmentRepository departmentRepository;
 
-    public UserService(UserRepository userRepository, AuthenticationManager authenticationManager, DepartmentRepository departmentRepository) {
-        this.userRepository = userRepository;
-        this.authenticationManager = authenticationManager;
-        this.departmentRepository = departmentRepository;
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(s);
+        if (user == null) {
+            throw new UsernameNotFoundException(String.format("用户不存在 '%s'.", s));
+        } else {
+            return user;
+        }
     }
 
     public Iterable<User> findUsers(String searchStr, Long departId, Integer page, Integer size, String sortColumn, String direction) {
@@ -148,6 +158,6 @@ public class UserService extends BaseService<User> {
     }
 
     private User findCurrentUser() {
-        return userRepository.getOne(((UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
+        return userRepository.getOne(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
     }
 }

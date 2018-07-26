@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import site.fish119.adminsadp.domain.BaseEntity;
 import site.fish119.adminsadp.domain.article.Article;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,7 +27,7 @@ import java.util.Set;
 @Table(name = "sys_user")
 @Data
 @JsonIgnoreProperties(value={"hibernateLazyInitializer","handler","fieldHandler"})
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
     private static final long serialVersionUID = -1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,5 +70,44 @@ public class User extends BaseEntity {
     private void preRemove(){
         this.setRoles(null);
         this.setDepartment(null);
+    }
+
+    // 账户是否未过期
+    @Column(columnDefinition="bool default true")
+    private boolean isAccountNonExpired=true;
+    // 账户是否未锁定
+    @Column(columnDefinition="bool default true")
+    private boolean isAccountNonLocked=true;
+    // 密码是否未过期
+    @Column(columnDefinition="bool default true")
+    private boolean isCredentialsNonExpired=true;
+    // 账户是否激活
+    @Column(columnDefinition="bool default true")
+    private boolean isEnabled=true;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Set<Authority> authorities = new HashSet<>();
+        for(Role role : this.roles){
+            authorities.addAll(role.getAuthorities());
+        }
+        return authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.isAccountNonExpired;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.isAccountNonLocked;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.isCredentialsNonExpired;
+    }
+    @Override
+    public boolean isEnabled() {
+        return this.isEnabled;
     }
 }

@@ -10,7 +10,6 @@ import site.fish119.adminsadp.domain.sys.Menu;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.repository.sys.MenuRepository;
 import site.fish119.adminsadp.repository.sys.UserRepository;
-import site.fish119.adminsadp.security.UserDetailsImple;
 import site.fish119.adminsadp.service.BaseService;
 import site.fish119.adminsadp.utils.MainUtil;
 
@@ -56,7 +55,7 @@ public class MenuService extends BaseService<Menu> {
     public Iterable<Menu> getCurrentUserMenus() {
         if (SecurityContextHolder.getContext().getAuthentication() != null
                 && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null) {
-            UserDetailsImple userDetails = (UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userRepository.getOne(userDetails.getId());
             return MainUtil.cleanChildrenMenu(menuRepository.findByMRolesInAndParentIsNullOrderBySortAsc(user.getRoles()), user.getRoles());
         } else {

@@ -8,7 +8,6 @@ import site.fish119.adminsadp.domain.BaseEntity;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.repository.sys.MenuRepository;
 import site.fish119.adminsadp.repository.sys.UserRepository;
-import site.fish119.adminsadp.security.UserDetailsImple;
 import site.fish119.adminsadp.service.BaseService;
 import site.fish119.adminsadp.utils.MainUtil;
 
@@ -36,7 +35,7 @@ public class CommonService  extends BaseService<BaseEntity> {
         Map<String, Object> result = new HashMap<>();
         if (SecurityContextHolder.getContext().getAuthentication() != null
                 && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null) {
-            UserDetailsImple userDetails = (UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             User user = userRepository.findByUsername(userDetails.getUsername());
             result.put("user", user);
             result.put("menus", MainUtil.cleanChildrenMenu(menuRepository.findByMRolesInAndParentIsNullOrderBySortAsc(user.getRoles()), user.getRoles()));

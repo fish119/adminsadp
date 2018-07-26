@@ -7,7 +7,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import site.fish119.adminsadp.domain.BaseEntity;
 import site.fish119.adminsadp.domain.sys.User;
 import site.fish119.adminsadp.repository.sys.UserRepository;
-import site.fish119.adminsadp.security.UserDetailsImple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,17 +49,17 @@ public abstract class BaseService<T extends BaseEntity> {
     User getCurrentUser(UserRepository userRepository) {
         if (SecurityContextHolder.getContext().getAuthentication() != null
                 && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null) {
-            UserDetailsImple userDetails = (UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            User userDetails = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return userRepository.findByUsername(userDetails.getUsername());
         } else {
             throw new BadCredentialsException("用户未登录");
         }
     }
 
-    public UserDetailsImple getCurrentUser() {
+    public User getCurrentUser() {
         if (SecurityContextHolder.getContext().getAuthentication() != null
                 && SecurityContextHolder.getContext().getAuthentication().getPrincipal() != null) {
-            return (UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         } else {
             throw new BadCredentialsException("用户未登录");
         }

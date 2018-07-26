@@ -10,6 +10,7 @@ import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import site.fish119.adminsadp.domain.sys.User;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -17,41 +18,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @Project adminsadp
- * @Package site.fish119.adminsadp.security
+ * @Project sss
+ * @Package site.fish119.sss.security.jwt
  * @Author fish119
- * @Date 2018/4/10 17:39
+ * @Date 2018/7/23 17:24
  * @Version V1.0
  */
 @Component
-public class TokenUtil implements Serializable {
-    private Logger logger  = LoggerFactory.getLogger(this.getClass());
+public class JwtTokenUtil implements Serializable {
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final long serialVersionUID = -1L;
 
     public String getUsernameFromToken(String token) throws AuthenticationException {
-        String username;
         try {
             final Claims claims = getClaimsFromToken(token);
-            username = claims.getSubject();
+            return claims.getSubject();
         } catch (Exception e) {
-            if(e instanceof ExpiredJwtException){
+            if (e instanceof ExpiredJwtException) {
                 throw new CredentialsExpiredException("认证超时，请重新登录");
             }
-            username = null;
+            return null;
         }
-        return username;
     }
 
-    private Claims getClaimsFromToken(String token) throws ExpiredJwtException{
+    private Claims getClaimsFromToken(String token) throws ExpiredJwtException {
         Claims claims;
         try {
-            claims = Jwts.parser().setSigningKey(AuthConstant.secret).parseClaimsJws(token).getBody();
-        }
-        catch (ExpiredJwtException e){
+            claims = Jwts.parser().setSigningKey(Constant.SECRET).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
             throw e;
-        }
-        catch (Exception err){
-            err.printStackTrace();
+        } catch (Exception err) {
             logger.error(err.getLocalizedMessage());
             claims = null;
         }
@@ -59,19 +55,17 @@ public class TokenUtil implements Serializable {
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
-        UserDetailsImple user = (UserDetailsImple) userDetails;
+        User user = (User) userDetails;
         final String username = getUsernameFromToken(token);
-        final Date created = getCreatedDateFromToken(token);
         return (username.equals(userDetails.getUsername())
-                && !isTokenExpired(token)
-                && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
+                && !isTokenExpired(token));
     }
 
     private Date getCreatedDateFromToken(String token) {
         Date created;
         try {
             final Claims claims = getClaimsFromToken(token);
-            created = new Date((Long) claims.get(AuthConstant.CLAIM_KEY_CREATED));
+            created = new Date((Long) claims.get(Constant.CLAIM_KEY_CREATED));
         } catch (Exception e) {
             created = null;
         }
@@ -94,14 +88,10 @@ public class TokenUtil implements Serializable {
         return expiration;
     }
 
-    private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
-        return (lastPasswordReset != null && created.before(lastPasswordReset));
-    }
-
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put(AuthConstant.CLAIM_KEY_USERNAME, userDetails.getUsername());
-        claims.put(AuthConstant.CLAIM_KEY_CREATED, new Date());
+        claims.put(Constant.CLAIM_KEY_USERNAME, userDetails.getUsername());
+        claims.put(Constant.CLAIM_KEY_CREATED, new Date());
         return generateToken(claims);
     }
 
@@ -109,8 +99,24 @@ public class TokenUtil implements Serializable {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, AuthConstant.secret)
+                .signWith(SignatureAlgorithm.HS512, Constant.SECRET)
                 .compact();
+    }
+
+    private Date generateExpirationDate() {
+        return new Date(System.currentTimeMillis() + Constant.EXPIRATION);
+    }
+
+    public String refreshToken(String token) {
+        String refreshedToken;
+        try {
+            final Claims claims = getClaimsFromToken(token);
+            claims.put(Constant.CLAIM_KEY_CREATED, new Date());
+            refreshedToken = generateToken(claims);
+        } catch (Exception e) {
+            refreshedToken = null;
+        }
+        return refreshedToken;
     }
 
     public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
@@ -119,19 +125,7 @@ public class TokenUtil implements Serializable {
                 && !isTokenExpired(token);
     }
 
-    private Date generateExpirationDate() {
-        return new Date(System.currentTimeMillis() + AuthConstant.expiration);
-    }
-
-    public String refreshToken(String token) {
-        String refreshedToken;
-        try {
-            final Claims claims = getClaimsFromToken(token);
-            claims.put(AuthConstant.CLAIM_KEY_CREATED, new Date());
-            refreshedToken = generateToken(claims);
-        } catch (Exception e) {
-            refreshedToken = null;
-        }
-        return refreshedToken;
+    private Boolean isCreatedBeforeLastPasswordReset(Date created, Date lastPasswordReset) {
+        return (lastPasswordReset != null && created.before(lastPasswordReset));
     }
 }

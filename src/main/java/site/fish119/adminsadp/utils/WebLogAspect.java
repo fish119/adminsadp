@@ -1,4 +1,5 @@
 package site.fish119.adminsadp.utils;
+
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -13,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import site.fish119.adminsadp.security.UserDetailsImple;
+import site.fish119.adminsadp.domain.sys.User;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
@@ -41,7 +42,7 @@ public class WebLogAspect {
         HttpServletRequest request = attributes.getRequest();
         Long id;
         try {
-            id = ((UserDetailsImple) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+            id = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
         } catch (Exception e) {
             id = null;
         }
