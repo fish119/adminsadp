@@ -55,7 +55,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
                     }
                 }
             } catch (ExpiredJwtException | CredentialsExpiredException e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token Expired 认证超时，请重新登录。");
+//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token Expired 认证超时，请重新登录。");
             }
         }
         filterChain.doFilter(request, response);

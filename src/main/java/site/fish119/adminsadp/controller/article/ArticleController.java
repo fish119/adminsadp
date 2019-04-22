@@ -52,4 +52,12 @@ public class ArticleController extends BaseController {
         result.put("data", articleService.save(reqBody));
         return ResponseEntity.ok(result);
     }
+
+    @RequestMapping(value = "/article/article/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> delMenu(@PathVariable("id") long id) {
+        Map<String, Object> result = new HashMap<>();
+        articleService.deleteArticle(id);
+        result.put("data", articleService.findArticles(null,null,0,15,null,null));
+        return ResponseEntity.ok(result);
+    }
 }

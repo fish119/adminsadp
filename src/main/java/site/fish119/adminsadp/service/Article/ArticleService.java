@@ -95,4 +95,8 @@ public class ArticleService extends BaseService<Article> {
     private Pageable getPageRequest(Integer page, Integer size, String sortColumn, String direction) {
         return PageRequest.of(page, size, getSort(sortColumn, direction));
     }
+
+    public void deleteArticle(Long id){
+        articleRepository.deleteById(id);
+    }
 }
