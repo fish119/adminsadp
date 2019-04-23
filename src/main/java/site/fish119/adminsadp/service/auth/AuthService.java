@@ -2,6 +2,7 @@ package site.fish119.adminsadp.service.auth;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,7 +32,7 @@ import java.util.HashSet;
 public class AuthService  extends BaseService<User> {
     @Autowired
     public AuthService(AuthenticationManager authenticationManager, UserRepository userRepository,
-                       UserDetailsService userDetailsService, JwtTokenUtil tokenUtil, RoleRepository roleRepository) {
+                       @Qualifier("userService") UserDetailsService userDetailsService, JwtTokenUtil tokenUtil, RoleRepository roleRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;
