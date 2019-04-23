@@ -8,7 +8,7 @@
                 <!--<url>jdbc:mysql://rm-8vb73441w63x96691.mysql.zhangbei.rds.aliyuncs.com:3306/snep?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8&amp;useSSL=true</url>-->
                 <!--<username>ycgy</username>-->
                 <!--<password>Credit2015Admin</password>-->
-                <url>jdbc:mysql://localhost:3306/adminadp?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8&amp;useSSL=true</url>
+                <url>jdbc:mysql://localhost:3306/adminadp?useUnicode=true&amp;characterEncoding=utf8&amp;characterSetResults=utf8&amp;useSSL=false</url>
                 <username>root</username>
                 <password>fish119</password>
             </dataSource>
