@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import site.fish119.adminsadp.domain.BaseEntity;
 import site.fish119.adminsadp.domain.article.Article;
@@ -86,7 +85,7 @@ public class User extends BaseEntity implements UserDetails {
     private boolean isEnabled=true;
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<Authority> getAuthorities() {
         Set<Authority> authorities = new HashSet<>();
         for(Role role : this.roles){
             authorities.addAll(role.getAuthorities());

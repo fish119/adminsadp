@@ -1,7 +1,6 @@
 package site.fish119.adminsadp.domain.sys;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +8,7 @@ import site.fish119.adminsadp.domain.BaseEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -23,6 +23,7 @@ import java.util.Set;
 @Table(name = "sys_authority")
 @Data
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler", "fieldHandler"})
+@JsonTypeName(value = "Authority")
 public class Authority extends BaseEntity implements GrantedAuthority {
     private static final long serialVersionUID = -1L;
     @Id
@@ -96,7 +97,7 @@ public class Authority extends BaseEntity implements GrantedAuthority {
     }
 
     private boolean sameParent(Authority newParent) {
-        return parent == null ? newParent == null : parent.equals(newParent);
+        return Objects.equals(parent, newParent);
     }
 
     public void removeRoles() {
